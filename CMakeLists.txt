@@ -84,6 +84,9 @@ IF (WIN32)
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/dlfcn-win32/src")
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/termiWin/include")
 
+  add_subdirectory(${nle_SOURCE_DIR}/third_party/dlfcn-win32)
+  add_subdirectory(${nle_SOURCE_DIR}/third_party/termiWin)
+
   file(
   GLOB
   NETHACK_SRC
@@ -96,8 +99,7 @@ IF (WIN32)
   "win/tty/*.c"
   "win/rl/winrl.cc"
   "third_party/libtmt/tmt.c"
-  "third_party/dlfcn-win32/src/dlfcn.c"
-  "third_party/termiWin/src/termiWin.c")
+  )
 ELSE()
   # other systems sources (POSIX)
   file(
@@ -138,6 +140,7 @@ target_link_libraries(nethackdl PUBLIC dl)
 add_executable(rlmain "sys/unix/rlmain.cc")
 set_target_properties(rlmain PROPERTIES CXX_STANDARD 11)
 target_link_libraries(rlmain PUBLIC nethackdl)
+
 target_include_directories(rlmain PUBLIC ${NLE_INC_GEN})
 add_dependencies(rlmain util) # For pm.h.
 
