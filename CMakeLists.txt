@@ -79,7 +79,6 @@ IF (WIN32)
 
   # add Windows specific dlfcn implementation header
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/dlfcn-win32/src")
-  list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/sys/winnt")
 
   file(
   GLOB
