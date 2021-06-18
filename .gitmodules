@@ -7,3 +7,7 @@
 [submodule "third_party/libtmt"]
 	path = third_party/libtmt
 	url = https://github.com/deadpixi/libtmt.git
+[submodule "third_party/dlfcn-win32"]
+	path = third_party/dlfcn-win32
+	url = https://github.com/dlfcn-win32/dlfcn-win32.git
+	branch = master

@@ -71,7 +71,32 @@ add_subdirectory(third_party/deboost.context EXCLUDE_FROM_ALL)
 add_subdirectory(util)
 add_subdirectory(dat)
 
-file(
+# this is empty except for Windows currently
+set(WINDOWS_INC "")
+
+IF (WIN32)
+  # windows sources
+
+  # add Windows specific dlfcn implementation header
+  list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/dlfcn-win32/src")
+  list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/sys/winnt")
+
+  file(
+  GLOB
+  NETHACK_SRC
+  "src/*.c"
+  "sys/share/posixregex.c"
+  "sys/share/ioctl.c"
+  "sys/unix/unixunix.c"
+  "sys/unix/unixmain.c"
+  "sys/unix/unixres.c"
+  "win/tty/*.c"
+  "win/rl/winrl.cc"
+  "third_party/libtmt/tmt.c"
+  "third_party/dlfcn-win32/src/dlfcn.c")
+ELSE()
+  # other systems sources (POSIX)
+  file(
   GLOB
   NETHACK_SRC
   "src/*.c"
@@ -83,6 +108,7 @@ file(
   "win/tty/*.c"
   "win/rl/winrl.cc"
   "third_party/libtmt/tmt.c")
+ENDIF()
 
 # libnethack library
 add_library(nethack SHARED ${NETHACK_SRC})
@@ -100,7 +126,8 @@ target_link_libraries(nethack PUBLIC m fcontext bz2)
 
 # dlopen wrapper library
 add_library(nethackdl STATIC "sys/unix/nledl.c")
-target_include_directories(nethackdl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(nethackdl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+                                            ${WINDOWS_INC})
 target_link_libraries(nethackdl PUBLIC dl)
 
 # rlmain C++ (test) binary
