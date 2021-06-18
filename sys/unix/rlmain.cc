@@ -4,7 +4,21 @@
 #include <iostream>
 #include <memory>
 #include <termios.h>
-#include <unistd.h>
+
+#ifndef WIN32
+    // does not exist under Windows
+    #include <unistd.h>
+#endif
+
+#ifdef WIN32
+    // #include <io.h>
+
+    #include <termiWin.h>
+
+    // and define this for Windows
+    // https://stackoverflow.com/a/13531812
+    #define STDIN_FILENO 0
+#endif
 
 extern "C" {
 #include "hack.h"

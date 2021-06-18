@@ -77,8 +77,12 @@ set(WINDOWS_INC "")
 IF (WIN32)
   # windows sources
 
+  # prevent termiWin from redefining core IO
+  add_definitions(-DTERMIWIN_DONOTREDEFINE)
+
   # add Windows specific dlfcn implementation header
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/dlfcn-win32/src")
+  list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/termiWin/include")
 
   file(
   GLOB
@@ -92,7 +96,8 @@ IF (WIN32)
   "win/tty/*.c"
   "win/rl/winrl.cc"
   "third_party/libtmt/tmt.c"
-  "third_party/dlfcn-win32/src/dlfcn.c")
+  "third_party/dlfcn-win32/src/dlfcn.c"
+  "third_party/termiWin/src/termiWin.c")
 ELSE()
   # other systems sources (POSIX)
   file(

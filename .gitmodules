@@ -11,3 +11,7 @@
 	path = third_party/dlfcn-win32
 	url = https://github.com/dlfcn-win32/dlfcn-win32.git
 	branch = master
+[submodule "third_party/termiWin"]
+	path = third_party/termiWin
+	url = https://github.com/veeso/termiWin.git
+	branch = master
