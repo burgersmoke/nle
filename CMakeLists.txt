@@ -85,7 +85,6 @@ IF (WIN32)
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/termiWin/include")
 
   add_subdirectory(${nle_SOURCE_DIR}/third_party/dlfcn-win32)
-  add_subdirectory(${nle_SOURCE_DIR}/third_party/termiWin)
 
   file(
   GLOB
