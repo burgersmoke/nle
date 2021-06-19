@@ -254,10 +254,18 @@ add_custom_command(
   COMMAND ${CMAKE_COMMAND} -E touch perm record logfile xlogfile
   COMMAND ${CMAKE_COMMAND} -E echo "WIZARDS=*" > sysconf)
 
-add_custom_command(
+IF(WIN32)
+    # removing the LC_ALL=C for Windows
+    add_custom_command(
+  DEPENDS dlb ${DATDLB} ${LEVS_GEN}
+  OUTPUT nhdat
+  COMMAND $<TARGET_FILE:dlb> ARGS cf nhdat ${DATDLB} ${LEVS_GEN})
+ELSE()
+    add_custom_command(
   DEPENDS dlb ${DATDLB} ${LEVS_GEN}
   OUTPUT nhdat
   COMMAND LC_ALL=C $<TARGET_FILE:dlb> ARGS cf nhdat ${DATDLB} ${LEVS_GEN})
+ENDIF()
 
 set(ALL_DAT_GEN nhdat perm record logfile xlogfile sysconf)
 list(TRANSFORM ALL_DAT_GEN PREPEND ${NLE_DAT_GEN}/)
