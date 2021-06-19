@@ -1,7 +1,9 @@
 #ifndef NLE_H
 #define NLE_H
 
+#ifndef WIN32
 #define NLE_BZ2_TTYRECS
+#endif
 
 #include <stdio.h>
 

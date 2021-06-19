@@ -1,7 +1,12 @@
 
 #include <assert.h>
 #include <string.h>
+
+#ifndef WIN32
 #include <sys/time.h>
+#else
+#include <winsock.h>
+#endif
 
 #include <tmt.h>
 
