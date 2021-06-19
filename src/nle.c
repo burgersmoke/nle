@@ -8,6 +8,11 @@
 #include <winsock.h>
 #endif
 
+#if defined(_MSC_VER)
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
+#endif
+
 #include <tmt.h>
 
 #define NEED_VARARGS
