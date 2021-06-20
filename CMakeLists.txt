@@ -90,7 +90,7 @@ IF (WIN32)
 
   # Two different graphics defines under Windows
   #add_definitions(-DMSWIN_GRAPHICS)
-  #add_definitions(-DTTY_GRAPHICS)
+  add_definitions(-DTTY_GRAPHICS)
 
   add_definitions(-DWIN32CON)
   add_definitions(-DSAFEPROCS)
@@ -121,7 +121,7 @@ IF (WIN32)
   "sys/winnt/ntsound.c"
   "win/tty/*.c"
   "win/share/safeproc.c"
-  #"win/rl/winrl.cc"
+  "win/rl/winrl.cc"
   "third_party/libtmt/tmt.c"
   )
 ELSE()
