@@ -87,10 +87,15 @@ IF (WIN32)
   add_definitions(-DTILES)
   add_definitions(-DWIN32CON)
   add_definitions(-DDLB)
-  add_definitions(-DMSWIN_GRAPHICS)
+
+  # Two different graphics defines under Windows
+  #add_definitions(-DMSWIN_GRAPHICS)
+  #add_definitions(-DTTY_GRAPHICS)
+
   add_definitions(-DWIN32CON)
   add_definitions(-DSAFEPROCS)
   add_definitions(-D_LIB)
+  add_definitions(-DTTYSTUB)
 
   # add Windows specific dlfcn implementation header
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/dlfcn-win32/src")
@@ -151,6 +156,7 @@ target_link_directories(nethack PUBLIC /usr/local/lib)
 
 IF (WIN32)
     #target_link_libraries(nethack PUBLIC m fcontext bz2)
+    target_link_libraries(nethack PUBLIC bcrypt)
 ELSE()
     target_link_libraries(nethack PUBLIC m fcontext bz2)
 ENDIF()
