@@ -80,6 +80,18 @@ IF (WIN32)
   # prevent termiWin from redefining core IO
   add_definitions(-DTERMIWIN_DONOTREDEFINE)
 
+  # Windows NetHack definitions
+  # See the NetHack 3.6 branch project for more info:
+  #https://github.com/NetHack/NetHack/blob/NetHack-3.6/win/win32/vs2017/NetHack.vcxproj
+  # <PreprocessorDefinitions>TILES;WIN32CON;DLB;MSWIN_GRAPHICS;SAFEPROCS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+  add_definitions(-DTILES)
+  add_definitions(-DWIN32CON)
+  add_definitions(-DDLB)
+  add_definitions(-DMSWIN_GRAPHICS)
+  add_definitions(-DWIN32CON)
+  add_definitions(-DSAFEPROCS)
+  add_definitions(-D_LIB)
+
   # add Windows specific dlfcn implementation header
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/dlfcn-win32/src")
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/termiWin/include")
@@ -87,16 +99,23 @@ IF (WIN32)
 
   add_subdirectory(${nle_SOURCE_DIR}/third_party/dlfcn-win32)
 
+  # Windows source files.
+  # NOTE: Background and decisions on which source files to include came from the NetHack 3.6 VS 2017 project:
+  # #https://github.com/NetHack/NetHack/blob/NetHack-3.6/win/win32/vs2017/NetHack.vcxproj
   file(
   GLOB
   NETHACK_SRC
   "src/*.c"
-  "sys/share/cppregex.c"
+  "sys/share/cppregex.cpp"
   #"sys/share/ioctl.c"
   #"sys/unix/unixunix.c"
-  "sys/nt/windmain.c"
+  "sys/winnt/windmain.c"
   #"sys/unix/unixres.c"
+  "sys/winnt/nttty.c"
+  "sys/winnt/winnt.c"
+  "sys/winnt/stubs.c"
   "win/tty/*.c"
+  "win/share/safeproc.c"
   #"win/rl/winrl.cc"
   "third_party/libtmt/tmt.c"
   )
