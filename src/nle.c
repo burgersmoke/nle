@@ -339,6 +339,8 @@ nle_yield(void *notdone)
     return t.data;
 }
 
+// Windows already has this defined in windmain.c
+#ifndef WIN32
 void
 nethack_exit(int status)
 {
@@ -347,6 +349,7 @@ nethack_exit(int status)
     }
     nle_yield(NULL);
 }
+#endif
 
 /* Called in really_done() in end.c to get "how". */
 void
@@ -474,6 +477,8 @@ nle_get_seed(nle_ctx_t *nle, unsigned long *core, unsigned long *disp,
 /* From unixtty.c */
 /* fatal error */
 /*VARARGS1*/
+// Windows already has this in nttty.c
+#ifndef WIN32
 void error
 VA_DECL(const char *, s)
 {
@@ -488,6 +493,7 @@ VA_DECL(const char *, s)
     VA_END();
     nethack_exit(EXIT_FAILURE);
 }
+#endif
 
 /* From unixtty.c */
 char erase_char, intr_char, kill_char;
