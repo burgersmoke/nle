@@ -155,7 +155,7 @@ target_link_directories(nethack PUBLIC /usr/local/lib)
 # target_compile_definitions(nethack PUBLIC "$<$<CONFIG:DEBUG>:MONITOR_HEAP>")
 
 IF (WIN32)
-    target_link_libraries(nethack PUBLIC bcrypt Winmm)
+    target_link_libraries(nethack PUBLIC fcontext bcrypt Winmm)
 ELSE()
     target_link_libraries(nethack PUBLIC m fcontext bz2)
 ENDIF()
