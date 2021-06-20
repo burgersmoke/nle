@@ -95,7 +95,6 @@ IF (WIN32)
   add_definitions(-DWIN32CON)
   add_definitions(-DSAFEPROCS)
   add_definitions(-D_LIB)
-  add_definitions(-DTTYSTUB)
 
   # add Windows specific dlfcn implementation header
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/dlfcn-win32/src")
