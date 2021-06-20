@@ -84,7 +84,7 @@ IF (WIN32)
   # See the NetHack 3.6 branch project for more info:
   #https://github.com/NetHack/NetHack/blob/NetHack-3.6/win/win32/vs2017/NetHack.vcxproj
   # <PreprocessorDefinitions>TILES;WIN32CON;DLB;MSWIN_GRAPHICS;SAFEPROCS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-  add_definitions(-DTILES)
+  #add_definitions(-DTILES)
   add_definitions(-DWIN32CON)
   add_definitions(-DDLB)
 
