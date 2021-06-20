@@ -83,6 +83,7 @@ IF (WIN32)
   # add Windows specific dlfcn implementation header
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/dlfcn-win32/src")
   list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/termiWin/include")
+  list(APPEND WINDOWS_INC "${nle_SOURCE_DIR}/third_party/deboost.context/include")
 
   add_subdirectory(${nle_SOURCE_DIR}/third_party/dlfcn-win32)
 
@@ -90,13 +91,13 @@ IF (WIN32)
   GLOB
   NETHACK_SRC
   "src/*.c"
-  "sys/share/posixregex.c"
-  "sys/share/ioctl.c"
-  "sys/unix/unixunix.c"
-  "sys/unix/unixmain.c"
-  "sys/unix/unixres.c"
+  "sys/share/cppregex.c"
+  #"sys/share/ioctl.c"
+  #"sys/unix/unixunix.c"
+  "sys/nt/windmain.c"
+  #"sys/unix/unixres.c"
   "win/tty/*.c"
-  "win/rl/winrl.cc"
+  #"win/rl/winrl.cc"
   "third_party/libtmt/tmt.c"
   )
 ELSE()
@@ -121,13 +122,19 @@ add_dependencies(nethack util dat)
 set_target_properties(nethack PROPERTIES CXX_STANDARD 14 SUFFIX ".so")
 target_include_directories(nethack PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
                                           ${NLE_INC_GEN} /usr/local/include
-                                          ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libtmt)
+                                          ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libtmt
+                                          ${WINDOWS_INC})
+
 target_link_directories(nethack PUBLIC /usr/local/lib)
 
 # Careful with -DMONITOR_HEAP: Ironically, it fails to fclose FILE* heaplog.
 # target_compile_definitions(nethack PUBLIC "$<$<CONFIG:DEBUG>:MONITOR_HEAP>")
 
-target_link_libraries(nethack PUBLIC m fcontext bz2)
+IF (WIN32)
+    #target_link_libraries(nethack PUBLIC m fcontext bz2)
+ELSE()
+    target_link_libraries(nethack PUBLIC m fcontext bz2)
+ENDIF()
 
 # dlopen wrapper library
 add_library(nethackdl STATIC "sys/unix/nledl.c")
