@@ -8,7 +8,11 @@
 #include <memory>
 #include <stdio.h>
 #include <string>
+
+#ifndef WIN32
 #include <unistd.h>
+#endif
+
 #include <vector>
 
 extern "C" {
