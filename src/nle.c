@@ -484,6 +484,8 @@ VA_DECL(const char *, s)
 /* From unixtty.c */
 char erase_char, intr_char, kill_char;
 
+// under Windows, these are defined in: nttty.c
+#ifndef WIN32
 void
 gettty()
 {
@@ -506,6 +508,7 @@ setftty()
     iflags.cbreak = ON;
     iflags.echo = OFF;
 }
+#endif
 
 void
 intron()
