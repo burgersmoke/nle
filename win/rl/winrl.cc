@@ -38,13 +38,6 @@ extern "C" {
 #define DEBUG_API(x)
 #endif
 
-/*
- * We had to change xwaitforspace() in getline.c to tell the agent in a
- * --More-- situation that enter/return (ironically not necessarily space)
- * is required to continue.
- */
-extern bool xwaitingforspace;
-
 /* some hack.h macros. Can be undefined here. */
 #undef Invisible
 #undef Warning
@@ -54,9 +47,14 @@ extern bool xwaitingforspace;
 #undef wizard
 #undef yn
 
-extern unsigned long nle_seeds[];
-
 extern "C" {
+/*
+ * We had to change xwaitforspace() in getline.c to tell the agent in a
+ * --More-- situation that enter/return (ironically not necessarily space)
+ * is required to continue.
+ */
+extern bool xwaitingforspace;
+extern unsigned long nle_seeds[];
 extern void *nle_yield(boolean);
 extern nle_obs *nle_get_obs();
 }
