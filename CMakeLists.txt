@@ -92,6 +92,9 @@ IF (WIN32)
   #add_definitions(-DMSWIN_GRAPHICS)
   add_definitions(-DTTY_GRAPHICS)
 
+  # Allow GUI stubs to link
+  add_definitions(-DGUISTUB)
+
   add_definitions(-DWIN32CON)
   add_definitions(-DSAFEPROCS)
   add_definitions(-D_LIB)
