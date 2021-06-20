@@ -20,6 +20,12 @@
     #define STDIN_FILENO 0
 #endif
 
+#ifdef WIN32
+    #define NETHACK_SHARED_LIB "nethack.dll"
+#else
+    #define NETHACK_SHARED_LIB "libnethack.so"
+#endif
+
 extern "C" {
 #include "hack.h"
 #include "nledl.h"
@@ -129,7 +135,7 @@ main(int argc, char **argv)
         fopen("nle.ttyrec.bz2", "a"), fclose);
 
     ScopedTC tc;
-    nle_ctx_t *nle = nle_start("libnethack.so", &obs, ttyrec.get(), nullptr);
+    nle_ctx_t *nle = nle_start(NETHACK_SHARED_LIB, &obs, ttyrec.get(), nullptr);
     if (argc > 1 && argv[1][0] == 'r') {
         randgame(nle, &obs, 3);
     } else {
