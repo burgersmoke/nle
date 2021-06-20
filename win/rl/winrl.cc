@@ -1077,6 +1077,8 @@ rl_update_positionbar(char *chrs)
 
 } // namespace nethack_rl
 
+extern "C" {
+
 struct window_procs rl_procs = {
     "rl",
     (WC_COLOR | WC_HILITE_PET | WC_INVERSE | WC_EIGHT_BIT_IN
@@ -1157,3 +1159,5 @@ struct window_procs rl_procs = {
     nethack_rl::NetHackRL::rl_status_update,
     genl_can_suspend_yes,
 };
+
+}
