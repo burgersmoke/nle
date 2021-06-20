@@ -3,6 +3,7 @@ import os
 import pkg_resources
 import shutil
 import tempfile
+import sys
 
 import numpy as np
 
@@ -119,7 +120,13 @@ class Nethack:
         os.mkdir(os.path.join(self._vardir, "save"))
 
         # Hacky AF: Copy our so into this directory to load several copies ...
-        dlpath = os.path.join(self._vardir, "libnethack.so")
+        nethack_shared_lib_name = "libnethack.so"
+
+        # Windows has a different filename
+        if sys.platform.startswith('win'):
+            nethack_shared_lib_name = "nethack.dll"
+
+        dlpath = os.path.join(self._vardir, nethack_shared_lib_name)
         shutil.copyfile(DLPATH, dlpath)
 
         if options is None:
