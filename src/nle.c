@@ -39,7 +39,11 @@ typedef SSIZE_T ssize_t;
 #include <sanitizer/asan_interface.h>
 #endif
 
+#ifndef WIN32
 extern int unixmain(int, char **);
+#else
+extern int main(int, char **);
+#endif
 
 signed char
 vt_char_color_extract(TMTCHAR *c)
@@ -190,7 +194,11 @@ mainloop(fcontext_transfer_t ctx_transfer)
 
     char *argv[1] = { "nethack" };
 
+#ifndef WIN32
     unixmain(1, argv);
+#else
+    main(1, argv);
+#endif
 }
 
 boolean
