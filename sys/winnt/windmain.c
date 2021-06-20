@@ -70,6 +70,9 @@ extern int GUILaunched;
 HANDLE hStdOut;
 #if defined(MSWIN_GRAPHICS)
 char default_window_sys[] = "mswin";
+#else
+// This currently fails to compile in NetHack 3.6 when MSWIN_GRAPHICS not defined
+char default_window_sys[] = "tty";
 #endif
 #ifdef WANT_GETHDATE
 static struct stat hbuf;
