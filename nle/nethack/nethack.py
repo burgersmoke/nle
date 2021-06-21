@@ -119,13 +119,13 @@ class Nethack:
             os.close(os.open(os.path.join(self._vardir, fn), os.O_CREAT))
         os.mkdir(os.path.join(self._vardir, "save"))
 
-        # Hacky AF: Copy our so into this directory to load several copies ...
         nethack_shared_lib_name = "libnethack.so"
 
         # Windows has a different filename
         if sys.platform.startswith('win'):
             nethack_shared_lib_name = "nethack.dll"
 
+        # Hacky AF: Copy our so into this directory to load several copies ...
         dlpath = os.path.join(self._vardir, nethack_shared_lib_name)
         shutil.copyfile(DLPATH, dlpath)
 
