@@ -146,7 +146,7 @@ main(int argc, char **argv)
     nle_end(nle);
 }
 
-// TODO: There must be a better solution than this, but linking the statis
+// TODO: There must be a better solution than this, but linking the static
 // termiwin.lib is not successful in cmake, nor is including termiwin.c to
 // the list of source files for the target
 #ifdef WIN32
