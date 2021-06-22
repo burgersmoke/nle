@@ -279,10 +279,22 @@ ENDIF()
 set(ALL_DAT_GEN ${NHDAT_FILE_NAME} perm record logfile xlogfile sysconf)
 list(TRANSFORM ALL_DAT_GEN PREPEND ${NLE_DAT_GEN}/)
 
-add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN})
+# files for installation can be different under Windows
+
+IF(WIN32)
+    set(WINDOWS_DAT "${NLE_SYS_WINNT}/sysconf.template" "${NLE_SYS_WINNT}/.nethackrc.template")
+
+    add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN} ${WINDOWS_DAT})
+ELSE()
+    add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN})
+ENDIF()
 
 install(FILES ${ALL_DAT_GEN} DESTINATION ${INSTDIR})
 install(FILES ${ALL_DAT_NOTGEN} DESTINATION ${INSTDIR}/dat)
+
+IF(WIN32)
+    install(FILES ${WINDOWS_DAT} DESTINATION "${INSTDIR}/..")
+ENDIF()
 
 # for some reason, under Windows this path preserves
 # backslashes and breaks down thinking this is an escape character

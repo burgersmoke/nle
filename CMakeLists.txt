@@ -60,6 +60,8 @@ set(NLE_INC ${nle_SOURCE_DIR}/include)
 set(NLE_DAT ${nle_SOURCE_DIR}/dat)
 set(NLE_UTIL ${nle_SOURCE_DIR}/util)
 set(NLE_DOC ${nle_SOURCE_DIR}/doc)
+# Some Windows files are located only here
+set(NLE_SYS_WINNT ${nle_SOURCE_DIR}/sys/winnt)
 
 set(NLE_SRC_GEN ${nle_BINARY_DIR}/src)
 set(NLE_INC_GEN ${nle_BINARY_DIR}/include)
