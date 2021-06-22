@@ -9,8 +9,13 @@ import numpy as np
 
 from nle import _pynethack
 
+NETHACK_SHARED_LIB_NAME = "libnethack.so"
 
-DLPATH = os.path.join(os.path.dirname(_pynethack.__file__), "libnethack.so")
+# Windows has a different filename
+if sys.platform.startswith('win'):
+    NETHACK_SHARED_LIB_NAME = "nethack.dll"
+
+DLPATH = os.path.join(os.path.dirname(_pynethack.__file__), NETHACK_SHARED_LIB_NAME)
 
 DUNGEON_SHAPE = (_pynethack.nethack.ROWNO, _pynethack.nethack.COLNO - 1)
 BLSTATS_SHAPE = (_pynethack.nethack.NLE_BLSTATS_SIZE,)
@@ -119,14 +124,8 @@ class Nethack:
             os.close(os.open(os.path.join(self._vardir, fn), os.O_CREAT))
         os.mkdir(os.path.join(self._vardir, "save"))
 
-        nethack_shared_lib_name = "libnethack.so"
-
-        # Windows has a different filename
-        if sys.platform.startswith('win'):
-            nethack_shared_lib_name = "nethack.dll"
-
         # Hacky AF: Copy our so into this directory to load several copies ...
-        dlpath = os.path.join(self._vardir, nethack_shared_lib_name)
+        dlpath = os.path.join(self._vardir, NETHACK_SHARED_LIB_NAME)
         shutil.copyfile(DLPATH, dlpath)
 
         if options is None:
