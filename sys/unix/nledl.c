@@ -20,9 +20,18 @@ nledl_init(nle_ctx_t *nledl, nle_obs *obs, nle_seeds_init_t *seed_init)
 
     void *(*start)(nle_obs *, FILE *, nle_seeds_init_t *);
     start = dlsym(nledl->dlhandle, "nle_start");
+
+    // check that we have a usable symbol
+    // Since in Windows DLL Exports issues can prevent this from being seen
+    char *error = dlerror();
+    if (error != NULL) {
+        fprintf(stderr, "%s\n", error);
+        exit(EXIT_FAILURE);
+    }
+
     nledl->nle_ctx = start(obs, nledl->ttyrec, seed_init);
 
-    char *error = dlerror();
+    error = dlerror();
     if (error != NULL) {
         fprintf(stderr, "%s\n", error);
         exit(EXIT_FAILURE);
