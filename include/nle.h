@@ -42,11 +42,28 @@ typedef struct nle_globals {
  */
 nle_ctx_t *current_nle_ctx;
 
+#ifdef WIN32
+__declspec( dllexport )
+#endif
 nle_ctx_t *nle_start(nle_obs *, FILE *, nle_seeds_init_t *);
+
+#ifdef WIN32
+__declspec( dllexport )
+#endif
 nle_ctx_t *nle_step(nle_ctx_t *, nle_obs *);
+
+#ifdef WIN32
+__declspec( dllexport )
+#endif
 void nle_end(nle_ctx_t *);
 
+#ifdef WIN32
+__declspec( dllexport )
+#endif
 void nle_set_seed(nle_ctx_t *, unsigned long, unsigned long, boolean);
+#ifdef WIN32
+__declspec( dllexport )
+#endif
 void nle_get_seed(nle_ctx_t *, unsigned long *, unsigned long *, boolean *);
 
 #endif /* NLE_H */
