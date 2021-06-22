@@ -283,4 +283,10 @@ add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN})
 
 install(FILES ${ALL_DAT_GEN} DESTINATION ${INSTDIR})
 install(FILES ${ALL_DAT_NOTGEN} DESTINATION ${INSTDIR}/dat)
-install(DIRECTORY DESTINATION ${INSTDIR}/save)
+
+# for some reason, under Windows this path preserves
+# backslashes and breaks down thinking this is an escape character
+# So let's normalize the path
+file(TO_CMAKE_PATH "${INSTDIR}/save" ENV_MY_DIR_VAR)
+
+install(DIRECTORY DESTINATION ${INSTALL_SAVE_DIR})
