@@ -171,6 +171,12 @@ target_include_directories(nethackdl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
                                             ${WINDOWS_INC})
 target_link_libraries(nethackdl PUBLIC dl)
 
+IF (WIN32)
+    # this includes a DLL which needs to push "up" a level from bin
+    install(FILES "${nle_BINARY_DIR}/bin/dl.dll" DESTINATION ${nle_BINARY_DIR})
+ENDIF()
+
+
 # rlmain C++ (test) binary
 add_executable(rlmain "sys/unix/rlmain.cc")
 set_target_properties(rlmain PROPERTIES CXX_STANDARD 11)

@@ -285,9 +285,6 @@ IF(WIN32)
     # set up all the files which need to be at the same level as the executable
     # for the NetHack 3.6.6 distribution
 
-    # this includes a DLL which needs to push "up" a level from bin
-    #configure_file("${nle_BINARY_DIR}/bin/dl.dll" ${nle_BINARY_DIR} COPYONLY)
-
     configure_file("${NLE_SYS_WINNT}/sysconf.template" ${nle_BINARY_DIR} COPYONLY)
     configure_file("${NLE_SYS_WINNT}/.nethackrc.template" ${nle_BINARY_DIR} COPYONLY)
     configure_file("${NLE_DOC}/Guidebook.txt" ${nle_BINARY_DIR} COPYONLY)
