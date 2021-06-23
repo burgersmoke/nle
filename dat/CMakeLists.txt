@@ -282,7 +282,30 @@ list(TRANSFORM ALL_DAT_GEN PREPEND ${NLE_DAT_GEN}/)
 # files for installation can be different under Windows
 
 IF(WIN32)
-    set(WINDOWS_DAT "${NLE_SYS_WINNT}/sysconf.template" "${NLE_SYS_WINNT}/.nethackrc.template")
+    # set up all the files which need to be at the same level as the executable
+    # for the NetHack 3.6.6 distribution
+
+    # this includes a DLL which needs to push "up" a level from bin
+    #configure_file("${nle_BINARY_DIR}/bin/dl.dll" ${nle_BINARY_DIR} COPYONLY)
+
+    configure_file("${NLE_SYS_WINNT}/sysconf.template" ${nle_BINARY_DIR} COPYONLY)
+    configure_file("${NLE_SYS_WINNT}/.nethackrc.template" ${nle_BINARY_DIR} COPYONLY)
+    configure_file("${NLE_DOC}/Guidebook.txt" ${nle_BINARY_DIR} COPYONLY)
+
+    configure_file("${NLE_DAT}/opthelp" ${nle_BINARY_DIR} COPYONLY)
+
+    #configure_file( COPYONLY)
+
+    # this needs to add ".template" for Windows
+    configure_file("${NLE_DAT}/symbols" "${nle_BINARY_DIR}/symbols.template" COPYONLY)
+
+    # for some reason, under Windows this path preserves
+    # backslashes and breaks down thinking this is an escape character
+    # So let's normalize the path
+    file(TO_CMAKE_PATH ${nle_BINARY_DIR} NLE_BINARY_DIR_NORMALIZED)
+    file(TO_CMAKE_PATH "${INSTDIR}/dat/${NHDAT_OUTPUT_FILE_NAME}" NHDAT_OUTPUT_FILE_NAME_WIN)
+
+    #install(FILES ${NHDAT_OUTPUT_FILE_NAME_WIN} DESTINATION ${NLE_BINARY_DIR_NORMALIZED})
 
     add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN} ${WINDOWS_DAT})
 ELSE()
@@ -291,10 +314,6 @@ ENDIF()
 
 install(FILES ${ALL_DAT_GEN} DESTINATION ${INSTDIR})
 install(FILES ${ALL_DAT_NOTGEN} DESTINATION ${INSTDIR}/dat)
-
-IF(WIN32)
-    install(FILES ${WINDOWS_DAT} DESTINATION "${INSTDIR}/..")
-ENDIF()
 
 # for some reason, under Windows this path preserves
 # backslashes and breaks down thinking this is an escape character
