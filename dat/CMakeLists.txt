@@ -268,7 +268,7 @@ IF(WIN32)
     add_custom_command(
   DEPENDS dlb ${DATDLB} ${LEVS_GEN}
   OUTPUT nhdat
-  COMMAND $<TARGET_FILE:dlb> ARGS cf ${NHDAT_OUTPUT_FILE_NAME} ${DATDLB} ${LEVS_GEN})
+  COMMAND $<TARGET_FILE:dlb> ARGS cf nhdat ${DATDLB} ${LEVS_GEN})
 ELSE()
     add_custom_command(
   DEPENDS dlb ${DATDLB} ${LEVS_GEN}
@@ -276,7 +276,7 @@ ELSE()
   COMMAND LC_ALL=C $<TARGET_FILE:dlb> ARGS cf nhdat ${DATDLB} ${LEVS_GEN})
 ENDIF()
 
-set(ALL_DAT_GEN ${NHDAT_FILE_NAME} perm record logfile xlogfile sysconf)
+set(ALL_DAT_GEN nhdat perm record logfile xlogfile sysconf)
 list(TRANSFORM ALL_DAT_GEN PREPEND ${NLE_DAT_GEN}/)
 
 # files for installation can be different under Windows
@@ -303,11 +303,9 @@ IF(WIN32)
     file(TO_CMAKE_PATH "${INSTDIR}/dat/${NHDAT_OUTPUT_FILE_NAME}" NHDAT_OUTPUT_FILE_NAME_WIN)
 
     #install(FILES ${NHDAT_OUTPUT_FILE_NAME_WIN} DESTINATION ${NLE_BINARY_DIR_NORMALIZED})
-
-    add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN} ${WINDOWS_DAT})
-ELSE()
-    add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN})
 ENDIF()
+
+add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN})
 
 install(FILES ${ALL_DAT_GEN} DESTINATION ${INSTDIR})
 install(FILES ${ALL_DAT_NOTGEN} DESTINATION ${INSTDIR}/dat)
