@@ -165,6 +165,21 @@ ELSE()
     target_link_libraries(nethack PUBLIC m fcontext bz2)
 ENDIF()
 
+IF(WIN32)
+    # Windows specific DLLs which are needed to be loaded at runtime
+
+    add_library(nhdefkey SHARED "sys/winnt/nhdefkey.c")
+    target_include_directories(nhdefkey PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+                                          ${NLE_INC_GEN}
+                                          ${WINDOWS_INC})
+
+    add_library(nhraykey SHARED "sys/winnt/nhraykey.c")
+    target_include_directories(nhraykey PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+                                          ${NLE_INC_GEN}
+                                          ${WINDOWS_INC})
+
+ENDIF()
+
 # dlopen wrapper library
 add_library(nethackdl STATIC "sys/unix/nledl.c")
 target_include_directories(nethackdl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
