@@ -134,6 +134,22 @@ if __name__ == "__main__":
     with open("README.md") as f:
         long_description = f.read()
 
+    if sys.platform.startswith('win'):
+        windows_termios_module = setuptools.Extension('termios',
+                                                      sources=['python_termios_windows/cython/Modules/termios.c',
+                                                               'third_party/termiWin/src/termiWin.c',
+                                                               'python_termios_windows/src/minimal_types.c'],
+                                                      include_dirs=['python_termios_windows/cython/Modules/clinic',
+                                                                    'third_party/termiWin/include',
+                                                                    'python_termios_windows/cython/Include/internal'])
+        # set this one up
+        setuptools.setup(
+            name='termios',
+            version='1.0',
+            description='Python Package with Windows termios C++ extension',
+            ext_modules=[windows_termios_module]
+        )
+
     setuptools.setup(
         name=package_name,
         version=version,

@@ -15,3 +15,6 @@
 	path = third_party/termiWin
 	url = https://github.com/veeso/termiWin.git
 	branch = master
+[submodule "python_termios_windows"]
+	path = python_termios_windows
+	url = https://github.com/burgersmoke/python_termios_windows.git
