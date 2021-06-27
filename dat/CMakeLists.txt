@@ -267,16 +267,16 @@ IF(WIN32)
     # removing the LC_ALL=C for Windows
     add_custom_command(
   DEPENDS dlb ${DATDLB} ${LEVS_GEN}
-  OUTPUT nhdat
+  OUTPUT ${NHDAT_OUTPUT_FILE_NAME}
   COMMAND $<TARGET_FILE:dlb> ARGS cf nhdat ${DATDLB} ${LEVS_GEN})
 ELSE()
     add_custom_command(
   DEPENDS dlb ${DATDLB} ${LEVS_GEN}
-  OUTPUT nhdat
+  OUTPUT ${NHDAT_OUTPUT_FILE_NAME}
   COMMAND LC_ALL=C $<TARGET_FILE:dlb> ARGS cf nhdat ${DATDLB} ${LEVS_GEN})
 ENDIF()
 
-set(ALL_DAT_GEN nhdat perm record logfile xlogfile sysconf)
+set(ALL_DAT_GEN ${NHDAT_OUTPUT_FILE_NAME} perm record logfile xlogfile sysconf)
 list(TRANSFORM ALL_DAT_GEN PREPEND ${NLE_DAT_GEN}/)
 
 # files for installation can be different under Windows
@@ -295,20 +295,20 @@ IF(WIN32)
 
     # this needs to add ".template" for Windows
     configure_file("${NLE_DAT}/symbols" "${nle_BINARY_DIR}/symbols.template" COPYONLY)
-
-    # for some reason, under Windows this path preserves
-    # backslashes and breaks down thinking this is an escape character
-    # So let's normalize the path
-    file(TO_CMAKE_PATH ${nle_BINARY_DIR} NLE_BINARY_DIR_NORMALIZED)
-    file(TO_CMAKE_PATH "${INSTDIR}/dat/${NHDAT_OUTPUT_FILE_NAME}" NHDAT_OUTPUT_FILE_NAME_WIN)
-
-    #install(FILES ${NHDAT_OUTPUT_FILE_NAME_WIN} DESTINATION ${NLE_BINARY_DIR_NORMALIZED})
 ENDIF()
 
 add_custom_target(dat ALL DEPENDS ${ALL_DAT_GEN} ${ALL_DAT_NOTGEN})
 
 install(FILES ${ALL_DAT_GEN} DESTINATION ${INSTDIR})
 install(FILES ${ALL_DAT_NOTGEN} DESTINATION ${INSTDIR}/dat)
+
+# for some reason, under Windows this path preserves
+# backslashes and breaks down thinking this is an escape character
+# So let's normalize the path
+file(TO_CMAKE_PATH ${nle_BINARY_DIR} NLE_BINARY_DIR_NORMALIZED)
+file(TO_CMAKE_PATH "${NLE_DAT_GEN}/${NHDAT_OUTPUT_FILE_NAME}" NHDAT_OUTPUT_FILE_NAME_WIN)
+
+install(FILES ${NHDAT_OUTPUT_FILE_NAME_WIN} DESTINATION ${NLE_BINARY_DIR_NORMALIZED})
 
 # for some reason, under Windows this path preserves
 # backslashes and breaks down thinking this is an escape character
