@@ -116,10 +116,7 @@ IF (WIN32)
   NETHACK_SRC
   "src/*.c"
   "sys/share/cppregex.cpp"
-  #"sys/share/ioctl.c"
-  #"sys/unix/unixunix.c"
   "sys/winnt/windmain.c"
-  #"sys/unix/unixres.c"
   "sys/winnt/nttty.c"
   "sys/winnt/winnt.c"
   "sys/winnt/stubs.c"
