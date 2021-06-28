@@ -129,6 +129,18 @@ IF (WIN32)
   "win/rl/winrl.cc"
   "third_party/libtmt/tmt.c"
   )
+
+
+  # since there are some issues with rlmain, let's also try to set up a vanilla
+  # nethack build here for a parity check...
+  add_executable(nethackwin ${NETHACK_SRC} )
+  target_include_directories(nethackwin PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+                                          ${NLE_INC_GEN} /usr/local/include
+                                          ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libtmt
+                                          ${WINDOWS_INC})
+  add_dependencies(nethackwin util dat)
+  target_link_libraries(nethackwin PUBLIC fcontext bcrypt Winmm)
+
 ELSE()
   # other systems sources (POSIX)
   file(
