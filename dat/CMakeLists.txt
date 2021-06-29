@@ -306,9 +306,9 @@ install(FILES ${ALL_DAT_NOTGEN} DESTINATION ${INSTDIR}/dat)
 # backslashes and breaks down thinking this is an escape character
 # So let's normalize the path
 file(TO_CMAKE_PATH ${nle_BINARY_DIR} NLE_BINARY_DIR_NORMALIZED)
-file(TO_CMAKE_PATH "${NLE_DAT_GEN}/${NHDAT_OUTPUT_FILE_NAME}" NHDAT_OUTPUT_FILE_NAME_WIN)
+file(TO_CMAKE_PATH "${NLE_DAT_GEN}/${NHDAT_OUTPUT_FILE_NAME}" NHDAT_OUTPUT_FILE_PATH)
 
-install(FILES ${NHDAT_OUTPUT_FILE_NAME_WIN} DESTINATION ${NLE_BINARY_DIR_NORMALIZED})
+install(FILES ${NHDAT_OUTPUT_FILE_PATH} DESTINATION ${NLE_BINARY_DIR_NORMALIZED})
 
 # for some reason, under Windows this path preserves
 # backslashes and breaks down thinking this is an escape character
